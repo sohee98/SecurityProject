@@ -42,10 +42,8 @@ if torch.cuda.is_available():
 
 
 # number of epochs of training
-n_epochs = 100
-# size of the batches
 # batch_size = 512            # default
-batch_size = 64
+batch_size = 256
 # name of the dataset
 dataset_celeb = "./celeb_a/img_align_celeba"
 dataset_sign = "./Dataset_All"
@@ -56,7 +54,7 @@ b1 = 0.5
 # adam: decay of first order momentum of gradient
 b2 = 0.999
 # number of cpu threads to use during batch generation
-n_cpu = 20
+n_cpu = 0
 # dimensionality of the latent space
 latent_dim = 100
 # size of each image dimension
@@ -102,10 +100,17 @@ class ImageDataset(Dataset):
         self.celeb_files = self.celeb_files[:split_len] if mode == "train" else self.celeb_files[split_len:]
         self.sign_files = self.sign_files[:split_len] if mode == "train" else self.sign_files[split_len:]
 
+
+        #if you want to use with single image, use this
+        # self.celeb_files = ['./temp/baby.png']
+        # self.sign_files = ['./temp/KakaoTalk_20230529_231909487.jpg']
+
+        
+
     def __getitem__(self, index):
 
-        celeb_img = Image.open(self.celeb_files[index])
-        sign_img = Image.open(self.sign_files[index])
+        celeb_img = Image.open(self.celeb_files[index]).convert('RGB')
+        sign_img = Image.open(self.sign_files[index]).convert('RGB')
 
         celeb_img = self.celeb_transform(celeb_img)
         sign_img = self.sign_transform(sign_img)

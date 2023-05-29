@@ -52,9 +52,8 @@ if torch.cuda.is_available():
 # load pretrained models
 load_pretrained_models = False
 # number of epochs of training
-n_epochs = 100
+n_epochs = 1000
 # size of the batches
-# batch_size = 512            # default
 batch_size = 128
 # name of the dataset
 dataset_celeb = "./celeb_a/img_align_celeba"
@@ -112,8 +111,8 @@ class ImageDataset(Dataset):
 
     def __getitem__(self, index):
 
-        celeb_img = Image.open(self.celeb_files[index])
-        sign_img = Image.open(self.sign_files[index])
+        celeb_img = Image.open(self.celeb_files[index]).convert('RGB')
+        sign_img = Image.open(self.sign_files[index]).convert('RGB')
 
         celeb_img = self.celeb_transform(celeb_img)
         sign_img = self.sign_transform(sign_img)
