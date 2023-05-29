@@ -2,7 +2,6 @@ celeb_a/
 signature/
 Dataset_All/
 .neptune/
-saved_models_not_for_git/
 saved_models/
 __pycache__/
 *.pth
